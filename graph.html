@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Proiect geometrie</title>
+	 <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+ 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+	<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	<style>
+	canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	.chart-container {
+		width: 100%;
+		margin-left: 40px;
+		margin-right: 40px;
+		margin-bottom: 40px;
+	}
+	.container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	h1,h2,h3,h4,h5,h6
+	{
+		text-align: center;
+	}
+	</style>
+</head>
+
+<body>
+
+	<h2> Proiect geometrie </h2>
+	<h6> Razvan Statescu & Henning Erik</h6>
+	<br/>
+	<div class="row col s12">			  
+		<form id = "puncte" class = "col s4">
+			
+		</form>
+		<div class="container col s8">
+			<div id = "titlu">
+				Reprezentare grafica
+			</div>
+		</div>
+	</div>
+	<script>
+		var materialstyle_start = "<div class = 'input-field col s6'>";
+		var materialstyle_end = "</div>";
+			for (var i = 1; i <=5; i++)
+			{
+				input1 = "<input type = 'number' id = 'punct-" + i + "-x' placeholder = 'X' value = '0'></input>";
+				label1 = "<label for='punct-" + i + "-x'>P" + i + "(X, y) " + "</label>";
+				input2 = "<input type = 'number' id = 'punct-" + i + "-y' placeholder = 'Y' value = '0'></input> <br/><br/>";
+				label2 = "<label for='punct-" + i + "-y'>P" + i + "(x, Y) " + "</label>";
+				$("#puncte").append(materialstyle_start + input1 + label1 + materialstyle_end +  materialstyle_start + input2 + label2 + materialstyle_end);
+			}
+			var submit_input = "<input class='btn waves-effect waves-light' type='submit'><i class='material-icons right'>send</i></input>";
+			$("#puncte").append(submit_input);
+		</script>
+
+	<script>
+		var chart;
+		var punct = {x: 0, y: 0};
+		function createConfig(details, data) {
+			return {
+				type: 'line',
+				data: {
+						datasets: [{
+						label: 'Patrulater',
+						steppedLine: details.steppedLine,
+						lineTension: 0,
+						data: data,
+						borderColor: details.color
+					},{
+						label: 'Punct',
+						steppedLine: details.steppedLine,
+						lineTension: 0,
+						data: [punct],
+						borderColor: window.chartColors.blue
+					}]
+				},
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: details.label,
+					},
+					scales: {
+						xAxes: [{
+							type: 'linear',
+							position: 'bottom'
+						}]
+					}
+				}
+			};
+		}
+
+
+		window.onload = function() {
+			var container = document.querySelector('.container');
+			p1x = $("#punct-1-x").val();
+			p1y = $("#punct-1-y").val();
+
+			p2x = $("#punct-2-x").val();
+			p2y = $("#punct-2-y").val();
+
+			p3x = $("#punct-3-x").val();
+			p3y = $("#punct-3-y").val();
+
+			p4x = $("#punct-4-x").val();
+			p4y = $("#punct-4-y").val();
+
+			ps5x = $("#punct-5-x").val();
+			ps5y = $("#punct-5-y").val();
+			var data = [
+				{
+					x: p1x,
+					y: p1y
+				},
+				{
+					x: p2x,
+					y: p2y
+				}, 
+				{
+					x: p3x,
+					y: p3y
+				}, 
+				{
+					x: p4x,
+					y: p4y
+				},
+				{
+					x: p1x,
+					y: p1y
+				}
+			];
+
+			var steppedLineSettings = [{
+				steppedLine: false,
+				label: '',
+				color: window.chartColors.red
+			}];
+
+			steppedLineSettings.forEach(function(details) {
+				var div = document.createElement('div');
+				div.classList.add('chart-container');
+
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				container.appendChild(div);
+
+				var ctx = canvas.getContext('2d');
+				var config = createConfig(details, data);
+				chart = new Chart(ctx, config);
+				
+			});
+		}
+
+		
+		
+		$("#puncte").change(function(e)	{
+			e.preventDefault();
+			p1x = $("#punct-1-x").val();
+			p1y = $("#punct-1-y").val();
+
+			p2x = $("#punct-2-x").val();
+			p2y = $("#punct-2-y").val();
+
+			p3x = $("#punct-3-x").val();
+			p3y = $("#punct-3-y").val();
+
+			p4x = $("#punct-4-x").val();
+			p4y = $("#punct-4-y").val();
+
+			ps5x = $("#punct-5-x").val();
+			ps5y = $("#punct-5-y").val();
+			var data = [
+				{
+					x: p1x,
+					y: p1y
+				},
+				{
+					x: p2x,
+					y: p2y
+				}, 
+				{
+					x: p3x,
+					y: p3y
+				}, 
+				{
+					x: p4x,
+					y: p4y
+				},
+				{
+					x: p1x,
+					y: p1y
+				}
+			];
+
+			punct = {x: ps5x, y: ps5y};
+			chart.data.datasets[0].data = data;
+			chart.data.datasets[1].data = [punct];
+			chart.update();
+		});
+
+		$("#puncte").submit(function(e)	{
+			e.preventDefault();
+			p1x = $("#punct-1-x").val();
+			p1y = $("#punct-1-y").val();
+
+			p2x = $("#punct-2-x").val();
+			p2y = $("#punct-2-y").val();
+
+			p3x = $("#punct-3-x").val();
+			p3y = $("#punct-3-y").val();
+
+			p4x = $("#punct-4-x").val();
+			p4y = $("#punct-4-y").val();
+
+			ps5x = $("#punct-5-x").val();
+			ps5y = $("#punct-5-y").val();
+			var data = [
+				{
+					x: p1x,
+					y: p1y
+				},
+				{
+					x: p2x,
+					y: p2y
+				}, 
+				{
+					x: p3x,
+					y: p3y
+				}, 
+				{
+					x: p4x,
+					y: p4y
+				},
+				{
+					x: p1x,
+					y: p1y
+				}
+			];
+
+			punct = {x: ps5x, y: ps5y};
+			
+			var formatare = {
+				"patrulater": data,
+				"punct": punct
+			}
+			$.post("http://scoalap.statescu.net/geometrie/test.php", { data:JSON.stringify(formatare) })
+				.done(function( data ) {
+					var text;
+					data_int = parseInt(data);
+					if (data_int == 0)
+						text = "Punctul albastru se afla IN AFARA patrulaterului";
+					else if (data_int == 1)
+						text = "Punctul albastru se afla IN INTERIORUL patrulaterului";
+					else if (data_int == 2)
+						text = "Punctul albastru se afla PE LATURA patrulaterului";
+					
+					$("#titlu").html("<span style = 'color:green'> " + text + "</span>");
+				});
+		});
+		</script>
+</body>
+
+</html>
